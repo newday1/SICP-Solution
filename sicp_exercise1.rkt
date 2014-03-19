@@ -21,7 +21,7 @@
                     )
 
 (define (sqrt-iter guess x)
-  (if (good-enough? guess x )
+  (if (good-enough2? guess x )
       guess
       (sqrt-iter (improve guess x)
                  x)))
@@ -58,5 +58,11 @@
   (if (= 0 0) 1 (/ 1 x)))
 
 (define (new-if-exec a b) (new-if (= 0 0) a b))
+
+(define (good-enough2? guess x)
+  (< (abs (- guess (improve guess x))) 0.001)
+  )
+
+
 
 
