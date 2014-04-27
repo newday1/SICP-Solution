@@ -52,3 +52,61 @@
    (build-fringe tree nil)) 
 
 (fringe x) 
+
+;;exercise 2.29
+
+(define (make-mobile left right)
+  (list left right))
+
+(define (make-branch length structure)
+  (list length structure))
+
+(define (left-branch tree)
+  (car tree)
+  )
+
+(define (right-branch tree)
+  (car (cdr tree))
+  )
+
+
+(define (branch-length branch)
+  (car branch)
+  )
+
+(define (branch-structure branch)
+  (car (cdr branch))
+  )
+
+(define (total-weight tree)
+  (cond ((and (pair? tree) (pair? (left-branch tree)) (pair? (right-branch tree)))
+         (+ (total-weight (left-branch tree)) (total-weight (right-branch tree))))
+        ((pair? tree) (total-weight (branch-structure tree)))
+        (else tree)
+        )
+  )
+
+(define (check-balance? tree)
+  (cond ((and (pair? tree) (pair? (left-branch tree)) (pair? (right-branch tree)))
+         (if (= (* (branch-length (left-branch tree)) (total-weight (left-branch tree))) (* (branch-length (right-branch tree)) (total-weight (right-branch tree))))
+             (and (check-balance? (left-branch tree)) (check-balance? (right-branch tree)))
+             #f)
+             )
+        ((pair? tree) (check-balance? (branch-structure tree)))
+        (else #t)
+        )     
+    
+  )
+  
+  
+(define tree1 (make-mobile (make-branch 1 2) (make-branch 1 2)))
+(define tree2 (make-mobile (make-branch 1 4) (make-branch 1 tree1)))
+
+;;最后一问只要改修改获取值的方式，左节点不变，右节点变成单独的(cdr tree)就好了
+
+
+
+
+
+
+
